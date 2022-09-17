@@ -1,12 +1,10 @@
-from turtle import width
+import sys
 import pygame 
 import button
 from pygame.locals import *
-
-# Declare const variables
-HEIGHT_SCREEN = 1280
-WIDTH_SCREEN = 720
-VERSION = 1.0
+from constant import *
+import Player
+import EnemyManager
 
 # Set up game
 pygame.init()
@@ -14,7 +12,7 @@ screen = pygame.display.set_mode((HEIGHT_SCREEN, WIDTH_SCREEN))
 pygame.display.set_caption('Zombies v' + str(VERSION))
 
 #game variable
-game_paused = True
+game_paused = False
 menu_state = "main"
 #font 
 
@@ -38,6 +36,11 @@ def drawBackGround():
 
 run = True
 
+enemyManager = EnemyManager.EnemyManager()
+enemyManager.initZombie((600, 600))
+
+FPSCLOCK = pygame.time.Clock()
+
 while run:
     screen.fill((52,78,91))
     drawBackGround()
@@ -45,10 +48,13 @@ while run:
         if menu_state == "main":
             if play_button.draw(screen):
                 game_paused = False
-                
+    else:
+        enemyManager.actAllEnemy(screen)
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
+            sys.exit()
 
     pygame.display.update()
+    FPSCLOCK.tick(FPS)
