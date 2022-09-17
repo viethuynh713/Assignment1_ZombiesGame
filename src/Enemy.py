@@ -13,7 +13,7 @@ class Enemy:
         heightHitBox = 50
         self.hitBox = Rect(position[0] - widthHitBox / 2, position[1] - heightHitBox, widthHitBox, heightHitBox)
     def hitHammer(self, player: Player) -> None:
-        player.incHitScore()
+        player.addScore()
         self.enemyManager.removeEnemy(self)
     def isCollideHammer(self, position: tuple) -> bool:
         if self.hitBox.collidepoint(position[0], position[1]):
