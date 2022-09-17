@@ -13,12 +13,12 @@ class Zombie(Enemy.Enemy):
     
     def hitHammer(self, player) -> None:
         if self.canGetHit:
-            player.addScore()
+            player.UpdateScore(10)
             self.destroy()
 
     
     def actAfterDive(self, player) -> None:
-        player.updateLives(-1)
+        player.UpdateLive(1)
 
     
     def draw(self, screen) -> None:

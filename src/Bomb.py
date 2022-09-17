@@ -9,7 +9,7 @@ class Bomb(Enemy.Enemy):
 
     def hitHammer(self, player) -> None:
         if self.canGetHit:
-            player.updateLives(-player.getLives())
+            player.UpdateLive(player.getLives())
             self.destroy()
 
 

@@ -52,7 +52,6 @@ class Enemy:
 
 
     def isCollideHammer(self, position: tuple) -> bool:
-        print(self.hitBox.topleft)
         if self.hitBox.collidepoint(position[0], position[1]):
             return True
         return False
