@@ -26,7 +26,7 @@ class EnemyManager:
 
     def hitHammer(self, position: tuple):
         for enemy in self.enemyList:
-            if enemy.isColliderHammer(position):
+            if enemy.isCollideHammer(position):
                 return enemy
         return None
 

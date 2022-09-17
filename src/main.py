@@ -8,7 +8,7 @@ import EnemyManager
 
 # Set up game
 pygame.init()
-screen = pygame.display.set_mode((HEIGHT_SCREEN, WIDTH_SCREEN))
+screen = pygame.display.set_mode((WIDTH_SCREEN, HEIGHT_SCREEN))
 pygame.display.set_caption('Zombies v' + str(VERSION))
 
 #game variable
@@ -26,7 +26,7 @@ background = pygame.image.load('../img/background.png').convert_alpha()
 play_icon = pygame.image.load('../icon/Play.png').convert_alpha()
 
 # button in menu
-play_button = button.Button(HEIGHT_SCREEN/2 - 50, WIDTH_SCREEN/2 - 50, play_icon, 0.1)
+play_button = button.Button(WIDTH_SCREEN/2 - 50, HEIGHT_SCREEN/2 - 50, play_icon, 0.1)
 
 
 def drawBackGround():
@@ -36,8 +36,11 @@ def drawBackGround():
 
 run = True
 
+player = Player.Player()
 enemyManager = EnemyManager.EnemyManager()
-enemyManager.initZombie((600, 600))
+# enemyManager.initZombie((400, 400))
+# enemyManager.initZombie((600, 500))
+# enemyManager.initZombie((800, 700))
 
 FPSCLOCK = pygame.time.Clock()
 
@@ -49,6 +52,9 @@ while run:
             if play_button.draw(screen):
                 game_paused = False
     else:
+        # enemy = enemyManager.hitHammer((600, 570))
+        # if enemy != None:
+        #     enemy.hitHammer(player)
         enemyManager.actAllEnemy(screen)
 
     for event in pygame.event.get():

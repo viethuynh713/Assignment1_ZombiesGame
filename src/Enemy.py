@@ -9,8 +9,9 @@ class Enemy:
     def __init__(self, enemyManager, position: tuple) -> None:
         # logic
         self.enemyManager = enemyManager
-        widthHitBox = ZOMBIE_WIDTH_HITBOX
-        heightHitBox = ZOMBIE_HEIGHT_HITBOX
+        self.scale = SCALE_A * position[1] + SCALE_B
+        widthHitBox = ZOMBIE_WIDTH_HITBOX * self.scale
+        heightHitBox = ZOMBIE_HEIGHT_HITBOX * self.scale
         self.hitBox = Rect(position[0] - widthHitBox / 2, position[1] - heightHitBox, widthHitBox, heightHitBox)
         self.canGetHit = False
         self.actionTime = 0
@@ -40,12 +41,15 @@ class Enemy:
 
     def hitHammer(self, player) -> None:
         if self.canGetHit:
+            print("hitHammer")
             player.addScore()
             self.destroy()
 
 
     def isCollideHammer(self, position: tuple) -> bool:
+        print(self.hitBox.topleft)
         if self.hitBox.collidepoint(position[0], position[1]):
+            print("collideHammer")
             return True
         return False
 
@@ -57,6 +61,7 @@ class Enemy:
     def draw(self, screen) -> None:
         self.loadSprite()
         sprite = pygame.image.load(self.sprite).convert_alpha()
+        sprite = pygame.transform.scale(sprite, (sprite.get_width() * self.scale, sprite.get_height() * self.scale))
         screen.blit(sprite, (self.hitBox.left, self.hitBox.top + (self.hitBox.height - sprite.get_height())))
 
 
