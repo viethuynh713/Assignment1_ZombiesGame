@@ -2,14 +2,30 @@ import main
 import pygame
 from pygame.locals import *
 
+hit_img = pygame.image.load('img/hit.png').convert_alpha()
+
 class Player:
-    def __init__(self, score: int, combo: int, comboTime: int):
+    def __init__(self, score: int, live: int, hitCount: int, missCount: int, KnockAnim: pygame.sprite(), combo:int, timeCombo: int):
         self.score = score
+        self.live = live
+        self.hitCount = hitCount
+        self.missCount = missCount
         self.combo = combo
-        self.comboTime = comboTime
-    def knockEnemy(self):
+        self.comboTime = timeCombo
+    def KnockEnemy(self, screen , x, y, hit: bool):
         pass
-    def addScore(self):
-        pass
-    def subtractScore(self):
-        pass
+
+    def UpdateHitCount(self):
+        self.hitCount += 1
+
+    def UpdateMissCount(self):
+        self.hitCount += 1
+
+    def UpdateScore(self, score: int):
+        self.score += score
+
+    def UpdateLive(self, decsLive: int):
+        self.live -= decsLive
+
+    def IsAlive(self):
+        return False if self.live < 1 else True
