@@ -1,16 +1,12 @@
 import random
 from EnemyManager import EnemyManager
-from Player import Player
+from Player import *
 import pygame
 from pygame.locals import *
 from button import Button
 from main import *
 from enum import Enum
-
-
-FPS = 60
-DEFAULT_TIME_SPAWN = 5000*FPS
-
+from constant import *
 
 class State(Enum):
     INIT = 0,
@@ -28,12 +24,14 @@ class GameController:
         self.player = player
         self.listEnemy = enemyManager
         self.state = State.INIT
+        self.listEnemyPosition = []
         self.GenerateListHole()
         self.Play()
 
     def GenerateListHole(self):
         self.listHole = []
-        self.listHole.append(pygame.math.Vector2(1, 1))
+        self.listHole.append((600, 700))
+        self.listHole.append((500, 500))
 
     def HandleEventUI(self):
         if self.state == State.INIT:
@@ -69,6 +67,7 @@ class GameController:
         self.timeSpawn -= self.clock.tick(FPS)
         
         # TODO: draw enemy in list enemy
+        self.listEnemy.actAllEnemy(self.screen)
     
     def Play(self):
         # Initialize

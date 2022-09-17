@@ -10,13 +10,14 @@ class EnemyManager:
 
 
     def initZombie(self, position: tuple) -> None:
-        zombie = Enemy.Enemy(self, position)
+        zombie = Enemy.Zombie(self, position)
         self.enemyList.append(zombie)
 
 
     def initBomb(self, position: tuple) -> None:
-        pass
-
+        boom = Enemy.Boom(self, position)
+        self.enemyList.append(boom)
+ 
 
     def actAllEnemy(self, screen) -> None:
         for enemy in self.enemyList:

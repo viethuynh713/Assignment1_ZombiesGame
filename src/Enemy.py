@@ -77,3 +77,10 @@ class Enemy:
     
     def destroy(self) -> None:
         self.enemyManager.removeEnemy(self)
+        
+class Zombie(Enemy):
+    def __init__(self, enemyManager, position: tuple) -> None:
+        Enemy.__init__(enemyManager, position)
+class Boom(Enemy):
+    def __init__(self, enemyManager, position: tuple) -> None:
+        Enemy.__init__(enemyManager, position)
