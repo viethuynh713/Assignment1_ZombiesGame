@@ -24,8 +24,8 @@ font = pygame.font.SysFont("Arialblack", 40)
 TEXT_COL = (255,255,255)
 
 # load background for the game
-background = pygame.image.load('img/background.png').convert_alpha()
-play_icon = pygame.image.load('icon/Play.png').convert_alpha()
+background = pygame.image.load('../img/background.png').convert_alpha()
+play_icon = pygame.image.load('../icon/Play.png').convert_alpha()
 
 # button in menu
 play_button = button.Button(HEIGHT_SCREEN/2 - 50, WIDTH_SCREEN/2 - 50, play_icon, 0.1)
