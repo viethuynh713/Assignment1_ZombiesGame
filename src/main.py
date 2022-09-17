@@ -12,7 +12,8 @@ pygame.display.set_caption('Zombies v1.0')
 
 # load background for the game
 
-imp = pygame.image.load("D:\\Zombies\\img\\background.png").convert()
+imp = pygame.image.load("D:\\Zombies\\img\\background.png").convert()   # address cua Bao
+# imp = pygame.image.load("../img/background.png").convert()              # address cua Khanh
 screen.blit(imp, (0, 0))
 pygame.display.flip()
 
