@@ -3,8 +3,8 @@ from pygame.locals import *
 import Enemy
 
 class Bomb(Enemy.Enemy):
-    def __init__(self, enemyManager, position: tuple) -> None:
-        super().__init__(enemyManager, position)
+    def __init__(self, enemyManager, position: tuple, frame: int) -> None:
+        super().__init__(enemyManager, position, frame)
     
 
     def hitHammer(self, player) -> None:

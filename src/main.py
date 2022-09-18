@@ -1,6 +1,5 @@
 import sys
 import pygame
-from GameController import GameController 
 import button
 from pygame.locals import *
 from constant import *
@@ -34,7 +33,7 @@ play_button = button.Button(WIDTH_SCREEN/2 - 50, HEIGHT_SCREEN/2 - 50, play_icon
 def drawBackGround():
     screen.blit(background, (0,0))
 
-#drawBackGround()
+# drawBackGround()
 
 run = True
 

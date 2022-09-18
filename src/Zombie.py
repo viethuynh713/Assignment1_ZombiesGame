@@ -7,8 +7,8 @@ import Enemy
 import Player
 
 class Zombie(Enemy.Enemy):
-    def __init__(self, enemyManager, position: tuple) -> None:
-        super().__init__(enemyManager, position)
+    def __init__(self, enemyManager, position: tuple, frame: int) -> None:
+        super().__init__(enemyManager, position, frame)
 
     
     def hitHammer(self, player) -> None:
@@ -32,7 +32,7 @@ class Zombie(Enemy.Enemy):
 
     def loadSprite(self) -> None:
         if self.state != enumType.EnemyState.STANDING:
-            idx = math.floor(self.actionTime / (ZOMBIE_CHANGE_STATE_TIME / ZOMBIE_SPRITE_LENGTH))
+            idx = math.floor(self.actionTime / (self.changeStateTime / ZOMBIE_SPRITE_LENGTH))
             if self.state == enumType.EnemyState.DIVING:
                 idx = ZOMBIE_SPRITE_LENGTH - idx - 1
                 if idx < 0:

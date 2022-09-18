@@ -5,13 +5,15 @@ from pygame.locals import *
 hit_img = pygame.image.load('img/hit.png').convert_alpha()
 
 class Player:
-    def __init__(self, score: int, live: int, hitCount: int, missCount: int, KnockAnim: pygame.sprite(), combo:int, timeCombo: int):
-        self.score = score
-        self.live = live
-        self.hitCount = hitCount
-        self.missCount = missCount
-        self.combo = combo
-        self.comboTime = timeCombo
+    def __init__(self) -> None:
+        pass
+    # def __init__(self, score: int, live: int, hitCount: int, missCount: int, combo:int, timeCombo: int) -> None:
+    #     self.score = score
+    #     self.live = live
+    #     self.hitCount = hitCount
+    #     self.missCount = missCount
+    #     self.combo = combo
+    #     self.comboTime = timeCombo
     def KnockEnemy(self, screen , x, y, hit: bool):
         pass
 
