@@ -1,8 +1,7 @@
-import imp
-from tkinter.messagebox import NO
 import pygame 
 from pygame.locals import *
-import Enemy
+import Zombie
+import Bomb
 
 class EnemyManager:
     def __init__(self) -> None:
@@ -10,18 +9,18 @@ class EnemyManager:
 
 
     def initZombie(self, position: tuple) -> None:
-        zombie = Enemy.Zombie(self, position)
+        zombie = Zombie.Zombie(self, position)
         self.enemyList.append(zombie)
 
 
     def initBomb(self, position: tuple) -> None:
-        boom = Enemy.Boom(self, position)
-        self.enemyList.append(boom)
- 
+        bomb = Bomb.Bomb(self, position)
+        self.enemyList.append(bomb)
 
-    def actAllEnemy(self, screen) -> None:
+
+    def actAllEnemy(self, screen, player) -> None:
         for enemy in self.enemyList:
-            enemy.act()
+            enemy.act(player)
             enemy.draw(screen)
 
 

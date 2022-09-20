@@ -1,8 +1,9 @@
 import sys
-import pygame 
+import pygame
 import button
 from pygame.locals import *
 from constant import *
+import GameController
 import Player
 import EnemyManager
 
@@ -32,15 +33,16 @@ play_button = button.Button(WIDTH_SCREEN/2 - 50, HEIGHT_SCREEN/2 - 50, play_icon
 def drawBackGround():
     screen.blit(background, (0,0))
 
-#drawBackGround()
+# drawBackGround()
 
 run = True
 
+gameController = GameController.GameController()
 player = Player.Player()
 enemyManager = EnemyManager.EnemyManager()
-# enemyManager.initZombie((400, 400))
-# enemyManager.initZombie((600, 500))
-# enemyManager.initZombie((800, 700))
+enemyManager.initBomb((400, 400))
+enemyManager.initZombie((600, 500))
+enemyManager.initBomb((800, 700))
 
 FPSCLOCK = pygame.time.Clock()
 
@@ -52,10 +54,10 @@ while run:
             if play_button.draw(screen):
                 game_paused = False
     else:
-        # enemy = enemyManager.hitHammer((600, 570))
+        # enemy = enemyManager.hitHammer((600, 450))
         # if enemy != None:
         #     enemy.hitHammer(player)
-        enemyManager.actAllEnemy(screen)
+        enemyManager.actAllEnemy(screen, player)
 
     for event in pygame.event.get():
         if event.type == QUIT:
