@@ -5,16 +5,16 @@ import Bomb
 
 class EnemyManager:
     def __init__(self) -> None:
-        self.enemyList = []
+            self.enemyList = []
 
 
     def initZombie(self, position: tuple) -> None:
-        zombie = Zombie.Zombie(self, position)
+        zombie = Zombie.Zombie(self, position,1)
         self.enemyList.append(zombie)
 
 
     def initBomb(self, position: tuple) -> None:
-        bomb = Bomb.Bomb(self, position)
+        bomb = Bomb.Bomb(self, position,1)
         self.enemyList.append(bomb)
 
 
