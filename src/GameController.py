@@ -124,11 +124,17 @@ class GameController:
         # TODO : Init list heart image
         self.isOpenSetting = False
 
+        self.listEnemy.initBomb((400, 400))
+        self.listEnemy.initZombie((600, 500))
+        self.listEnemy.initBomb((800, 700))
+
         while True:
             self.clock.tick(FPS)
+            self.screen.blit(background, (0, 0))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
+                    sys.exit()
                 elif event.type == MOUSEBUTTONDOWN and self.state == State.PLAYING:
                     self.player.knockEnemy()
                     enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
