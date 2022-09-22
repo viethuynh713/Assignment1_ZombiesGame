@@ -16,9 +16,11 @@ class Player:
         pass
 
     def UpdateHitCount(self):
+        print("Hit enemy")
         self.hitCount += 1
 
     def UpdateMissCount(self):
+        print("Hit bomb")
         self.hitCount += 1
 
     def UpdateScore(self, score: int):
