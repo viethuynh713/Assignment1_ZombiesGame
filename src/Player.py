@@ -19,7 +19,7 @@ class Player:
         self.hitCount += 1
 
     def UpdateMissCount(self):
-        self.hitCount += 1
+        self.missCount += 1
 
     def UpdateScore(self, score: int):
         self.score += score

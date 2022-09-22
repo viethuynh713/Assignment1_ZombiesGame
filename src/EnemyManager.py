@@ -36,6 +36,7 @@ class EnemyManager:
 
     def removeEnemy(self, enemy) -> None:
         self.enemyList.remove(enemy)
+    
 
 
     def getEnemyList(self) -> list:

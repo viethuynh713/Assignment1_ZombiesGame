@@ -135,27 +135,27 @@ class GameController:
         self.isOpenSetting = False
 
         
-        hammer_idle = pygame.image.load("../img/exit_button_menu.png").convert_alpha()
+        hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
         
-        hammer_idle = pygame.transform.scale(hammer_idle,(100 ,100)) 
+        hammer_idle = pygame.transform.scale(hammer_img,(120 ,120)) 
         
         hammer_click = pygame.transform.rotate(hammer_idle,30)
         
         hammer = hammer_idle
         
         #pygame.mouse.set_visible(False)
+        background = pygame.image.load("../img/background.png")
         while True:
-            background = pygame.image.load("../img/background.png")
             self.screen.blit(background, (0, 0))
-            self.screen.blit(hammer,(0,0))
+            #Sself.screen.blit(hammer, (0, 0))
+            self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 50,pygame.mouse.get_pos()[1]-89))
             self.clock.tick(FPS)
-            self.screen.blit(background, (0, 0))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:# and self.state == State.PLAYING:
-            
+                    #print(pygame.mouse.get_pos())
                     hammer = hammer_click
                     if self.state == State.PLAYING:
                         enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
@@ -185,4 +185,10 @@ class GameController:
     def EndGame(self):
         self.state = State.END
         print("End Game")
+        print(self.player.hitCount)
+        print(self.player.missCount)
+    def InitGame(self):
+        self.player = Player()
+        
+        self.listEnemy = EnemyManager()
 
