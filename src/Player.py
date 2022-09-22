@@ -26,6 +26,7 @@ class Player:
 
     def UpdateLive(self, decsLive: int):
         self.live -= decsLive
+        print("Live: " + str(self.live))
 
     def IsAlive(self):
         return False if self.live < 1 else True

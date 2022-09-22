@@ -11,12 +11,12 @@ class EnemyManager:
 
 
     def initZombie(self, position: tuple) -> None:
-        zombie = Zombie.Zombie(self, position,1)
+        zombie = Zombie.Zombie(self, position,5)
         self.enemyList.append(zombie)
 
 
     def initBomb(self, position: tuple) -> None:
-        bomb = Bomb.Bomb(self, position,1)
+        bomb = Bomb.Bomb(self, position,5)
         self.enemyList.append(bomb)
 
 

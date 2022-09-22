@@ -1,3 +1,4 @@
+
 import random
 from EnemyManager import EnemyManager
 from Player import *
@@ -8,16 +9,18 @@ from main import *
 from enum import Enum
 from constant import *
 from enumType import *
+from Bomb import *
+from Zombie import *
 
 class GameController:
     def __init__(self, player: Player, enemyManager: EnemyManager) -> None:
-        self.timeSpawn = DEFAULT_TIME_SPAWN
-        self.minTimeSpawn = 1000
-        self.maxTimeSpawn = 5000
+        self.timeSpawn = 100# DEFAULT_TIME_SPAWN
+        self.minTimeSpawn = 100
+        self.maxTimeSpawn = 1200
         self.player = player
         self.listEnemy = enemyManager
         self.state = State.PLAYING
-        self.listEnemyPosition = []
+        self.listHoleHaveEnemy = []
         self.GenerateListHole()
         self.Play()
 
@@ -25,6 +28,21 @@ class GameController:
         self.listHole = []
         self.listHole.append((600, 700))
         self.listHole.append((500, 500))
+        self.listHole.append((300, 500))
+        self.listHole.append((68, 231))
+        self.listHole.append((335, 245))
+        self.listHole.append((543, 227))
+        self.listHole.append((78, 454))
+        self.listHole.append((147, 380))
+        self.listHole.append((331, 374))
+        self.listHole.append((195, 497))
+        self.listHole.append((87, 603))
+        self.listHole.append((505, 522))
+        self.listHole.append((1188, 512))
+        self.listHole.append((979, 631))
+        self.listHole.append((850, 540))
+        self.listHole.append((684, 671))
+
 
     def HandleEventUI(self):
         if self.state == State.INIT:
@@ -69,11 +87,12 @@ class GameController:
             pass
 
     def SpawnEnemy(self):
+
         if self.timeSpawn <= 0:
-            if random.randint(0,100) < 10:
-                self.listEnemy.initBomb(self.listHole[random.randint(0,self.listHole.size)])
+            if random.randint(0,100) < 50:
+                self.listEnemy.initBomb(self.listHole[random.randint(0,self.listHole.__len__()-1)])
             else:
-                self.listEnemy.initZombie(self.listHole[random.randint(0,self.listHole.size)])
+                self.listEnemy.initZombie(self.listHole[random.randint(0,self.listHole.__len__()-1)])
             self.timeSpawn = random.randint(self.minTimeSpawn, self.maxTimeSpawn)
             
         self.timeSpawn -= self.clock.tick(FPS)
@@ -93,8 +112,6 @@ class GameController:
         icon = pygame.image.load("../icon/icon_game.png")
         pygame.display.set_icon(icon)
         # Set icon for the game
-        background = pygame.image.load("../img/background.png")
-        self.screen.blit(background, (0, 0))
 
         # # Set up UI
         # # Init Game Screen
@@ -117,33 +134,56 @@ class GameController:
         # TODO : Init list heart image
         self.isOpenSetting = False
 
-        self.listEnemy.initBomb((400, 400))
-        # self.listEnemy.initZombie((600, 500))
-        self.listEnemy.initBomb((800, 700))
-
+        
+        hammer_idle = pygame.image.load("../img/exit_button_menu.png").convert_alpha()
+        
+        hammer_idle = pygame.transform.scale(hammer_idle,(100 ,100)) 
+        
+        hammer_click = pygame.transform.rotate(hammer_idle,30)
+        
+        hammer = hammer_idle
+        
+        #pygame.mouse.set_visible(False)
         while True:
+            background = pygame.image.load("../img/background.png")
+            self.screen.blit(background, (0, 0))
+            self.screen.blit(hammer,(0,0))
             self.clock.tick(FPS)
             self.screen.blit(background, (0, 0))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == MOUSEBUTTONDOWN and self.state == State.PLAYING:
-                    # self.player.KnockEnemy()
-                    enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
-                    if enemy:
-                        enemy.hitHammer(self.player)
-                        # TODO: Check type of enemy, if type of enemy is Boom -> subtract heart else increase hit score
-                    else:
-                        # TODO: Increase the player miss score
-                        pass
-            self.SpawnEnemy()
+                elif event.type == MOUSEBUTTONDOWN:# and self.state == State.PLAYING:
+            
+                    hammer = hammer_click
+                    if self.state == State.PLAYING:
+                        enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
+                        if enemy:
+                            # TODO: Check type of enemy, if type of enemy is Boom -> subtract heart else increase hit score
+                            if type(enemy) == Bomb:
+                                self.player.UpdateMissCount()
+                                enemy.hitHammer(self.player)
+                                    
+                            if type(enemy) == Zombie:
+                                self.player.UpdateHitCount()
+                                enemy.hitHammer(self.player)
+                                
+                        else:
+                            # TODO: Increase the player miss score
+                            self.player.UpdateMissCount()
+                        
+                elif event.type == MOUSEBUTTONUP:
+                    hammer = hammer_idle
+            if not self.player.IsAlive() and self.state == State.PLAYING:
+                self.EndGame()
+            if self.state == State.PLAYING:
+                self.SpawnEnemy()
             #self.HandleEventUI()
             print(self.player.getLives())
             pygame.display.update()
 
     def EndGame(self):
-        pass
+        self.state = State.END
+        print("End Game")
 
-    def PauseGame(self):
-        pass

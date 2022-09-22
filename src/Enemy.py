@@ -46,7 +46,7 @@ class Enemy:
 
 
     def actAfterDive(self, player) -> None:
-        pass
+        player.UpdateLive(1)
 
 
     def hitHammer(self, player) -> None:
@@ -70,9 +70,9 @@ class Enemy:
     def destroy(self) -> None:
         self.enemyManager.removeEnemy(self)
         
-class Zombie(Enemy):
-    def __init__(self, enemyManager, position: tuple) -> None:
-        Enemy.__init__(enemyManager, position)
-class Bomb(Enemy):
-    def __init__(self, enemyManager, position: tuple) -> None:
-        Enemy.__init__(enemyManager, position)
+# class Zombie(Enemy):
+#     def __init__(self, enemyManager, position: tuple) -> None:
+#         Enemy.__init__(enemyManager, position)
+# class Bomb(Enemy):
+#     def __init__(self, enemyManager, position: tuple) -> None:
+#         Enemy.__init__(enemyManager, position)
