@@ -1,7 +1,7 @@
 ### General
 WIDTH_SCREEN = 1280
 HEIGHT_SCREEN = 720
-FPS = 60
+FPS = 20
 VERSION = 1.0
 ### Game Controller
 DEFAULT_TIME_SPAWN = 5000*FPS
