@@ -50,7 +50,7 @@ class Enemy:
 
 
     def hitHammer(self, player) -> None:
-        pass
+        print("Enemy")
 
 
     def isCollideHammer(self, position: tuple) -> bool:

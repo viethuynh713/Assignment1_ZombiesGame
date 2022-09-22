@@ -16,7 +16,7 @@ class GameController:
         self.maxTimeSpawn = 5000
         self.player = player
         self.listEnemy = enemyManager
-        self.state = State.INIT
+        self.state = State.PLAYING
         self.listEnemyPosition = []
         self.GenerateListHole()
         self.Play()
@@ -47,7 +47,7 @@ class GameController:
                 if self.soundMenu_button.draw(self.screen):
                     # TODO: Same 
                     pass
-        if self.tate == State.TUTORIAL:
+        if self.state == State.TUTORIAL:
             
             # TODO: implement tutorial mode
             pass
@@ -129,10 +129,10 @@ class GameController:
                     pygame.quit()
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN and self.state == State.PLAYING:
-                    self.player.knockEnemy()
+                    # self.player.KnockEnemy()
                     enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
                     if enemy:
-                        pass
+                        enemy.hitHammer(self.player)
                         # TODO: Check type of enemy, if type of enemy is Boom -> subtract heart else increase hit score
                     else:
                         # TODO: Increase the player miss score
