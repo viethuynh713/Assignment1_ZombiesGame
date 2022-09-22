@@ -73,6 +73,6 @@ class Enemy:
 class Zombie(Enemy):
     def __init__(self, enemyManager, position: tuple) -> None:
         Enemy.__init__(enemyManager, position)
-class Boom(Enemy):
+class Bomb(Enemy):
     def __init__(self, enemyManager, position: tuple) -> None:
         Enemy.__init__(enemyManager, position)

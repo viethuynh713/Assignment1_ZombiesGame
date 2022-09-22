@@ -7,14 +7,7 @@ from button import Button
 from main import *
 from enum import Enum
 from constant import *
-
-class State(Enum):
-    INIT = 0,
-    PLAYING = 1,
-    PAUSE = 2,
-    END = 3,
-    TUTORIAL = 4,
-
+from enumType import *
 
 class GameController:
     def __init__(self, player: Player, enemyManager: EnemyManager) -> None:

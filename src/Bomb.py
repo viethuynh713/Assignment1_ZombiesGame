@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from pygame import mixer
 import Enemy
 
 class Bomb(Enemy.Enemy):
@@ -9,6 +10,10 @@ class Bomb(Enemy.Enemy):
 
     def hitHammer(self, player) -> None:
         if self.canGetHit:
+            # Play sound
+            hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
+            hit_hammer_sound.play()
+            # Add score
             player.UpdateLive(player.getLives())
             self.destroy()
 
