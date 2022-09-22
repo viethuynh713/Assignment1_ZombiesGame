@@ -7,6 +7,7 @@ from button import Button
 from main import *
 from enum import Enum
 from constant import *
+import webbrowser
 
 class State(Enum):
     INIT = 0,
@@ -75,6 +76,11 @@ class GameController:
                     if button.Button(1207, 175, self.musicActiveIcon, 1).draw(self.screen):
                         self.isMusicDisable = True
                 
+            if button.Button(30, 640, self.aboutUsButton, 0.5).draw(self.screen):
+                webbrowser.open("www.facebook.com")
+                # will change
+
+
         if self.state == State.TUTORIAL:
             if button.Button(30, 640, self.backButton, 0.5).draw(self.screen):
                 self.state = State.INIT
@@ -177,7 +183,7 @@ class GameController:
         self.noButton = pygame.image.load("../img/no_button.png")
         self.homeButton = pygame.image.load("../icon/icon_home.png")
         self.restartButton = pygame.image.load("../icon/icon_restart.png")
-        
+        self.aboutUsButton = pygame.image.load("../img/aboutUs_button.png")
 
         while True:
             self.clock.tick(FPS)
