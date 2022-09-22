@@ -13,7 +13,6 @@ class Zombie(Enemy.Enemy):
 
     
     def hitHammer(self, player) -> None:
-        print("Zombie")
         if self.canGetHit:
             # Play sound
             hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')

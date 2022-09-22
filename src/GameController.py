@@ -118,7 +118,7 @@ class GameController:
         self.isOpenSetting = False
 
         self.listEnemy.initBomb((400, 400))
-        self.listEnemy.initZombie((600, 500))
+        # self.listEnemy.initZombie((600, 500))
         self.listEnemy.initBomb((800, 700))
 
         while True:
@@ -139,6 +139,7 @@ class GameController:
                         pass
             self.SpawnEnemy()
             #self.HandleEventUI()
+            print(self.player.getLives())
             pygame.display.update()
 
     def EndGame(self):
