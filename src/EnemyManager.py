@@ -1,5 +1,6 @@
 import pygame 
 from pygame.locals import *
+from pygame import mixer
 import Zombie
 import Bomb
 
@@ -28,6 +29,8 @@ class EnemyManager:
         for enemy in self.enemyList:
             if enemy.isCollideHammer(position):
                 return enemy
+        miss_enemy_sound = mixer.Sound('../Sound/miss_enemy.mp3')
+        miss_enemy_sound.play()
         return None
 
 

@@ -9,6 +9,7 @@ class Bomb(Enemy.Enemy):
     
 
     def hitHammer(self, player) -> None:
+        print("Bomb")
         if self.canGetHit:
             # Play sound
             hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')

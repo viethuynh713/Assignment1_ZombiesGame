@@ -53,7 +53,7 @@ class GameController:
                 if self.soundMenu_button.draw(self.screen):
                     # TODO: Same 
                     pass
-        if self.tate == State.TUTORIAL:
+        if self.state == State.TUTORIAL:
             
             # TODO: implement tutorial mode
             pass
@@ -138,7 +138,7 @@ class GameController:
                     pygame.quit()
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:# and self.state == State.PLAYING:
-    
+        
                     hammer = hammer_click
                     if self.state == State.PLAYING:
                         enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
