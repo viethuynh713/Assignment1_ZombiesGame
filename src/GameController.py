@@ -76,7 +76,7 @@ class GameController:
                     if button.Button(1207, 175, self.musicActiveIcon, 1).draw(self.screen):
                         self.isMusicDisable = True
                 
-            if button.Button(30, 640, self.aboutUsButton, 0.5).draw(self.screen):
+            if button.Button(1200, 640, self.aboutUsButton, 0.5).draw(self.screen):
                 webbrowser.open("www.facebook.com")
                 # will change
 
