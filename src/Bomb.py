@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 from pygame import mixer
+from enumType import *
 import Enemy
 
 class Bomb(Enemy.Enemy):
@@ -15,8 +16,11 @@ class Bomb(Enemy.Enemy):
             hit_hammer_sound.play()
             # Add score
             player.UpdateLive(player.getLives())
-            self.destroy()
+            self.changeToDiedState()
 
 
     def draw(self, screen) -> None:
-        pygame.draw.rect(screen, (255, 0, 0), (self.hitBox.left, self.hitBox.top, self.hitBox.width, self.hitBox.height))
+        if self.state == EnemyState.DIED:
+            pygame.draw.rect(screen, (255, 0, 0), (self.hitBox.left, self.hitBox.top, self.hitBox.width, self.hitBox.height))
+        else:
+            pygame.draw.rect(screen, (0, 0, 0), (self.hitBox.left, self.hitBox.top, self.hitBox.width, self.hitBox.height))

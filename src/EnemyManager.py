@@ -7,7 +7,6 @@ import Bomb
 class EnemyManager:
     def __init__(self) -> None:
         self.enemyList = []
-        self.diedZombie = []
 
 
     def initZombie(self, position: tuple) -> None:

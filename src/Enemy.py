@@ -38,10 +38,13 @@ class Enemy:
             if self.actionTime == self.standingTime:
                 self.state = EnemyState.DIVING
                 self.actionTime = 0
-        else:
+        elif self.state == EnemyState.DIVING:
             self.hitBox = Rect(self.hitBox.left, self.hitBox.top + self.maxHeightHitBox / self.changeStateTime, self.hitBox.width, self.hitBox.height - self.maxHeightHitBox / self.changeStateTime)
             if self.actionTime == self.changeStateTime:
                 self.actAfterDive(player)
+                self.destroy()
+        else:
+            if self.actionTime == ENEMY_DIED_TIME:
                 self.destroy()
 
 
@@ -57,6 +60,12 @@ class Enemy:
         if self.hitBox.collidepoint(position[0], position[1]):
             return True
         return False
+
+
+    def changeToDiedState(self) -> None:
+        self.canGetHit = False
+        self.state = EnemyState.DIED
+        self.actionTime = 0
 
 
     def getHitBox(self) -> Rect:
