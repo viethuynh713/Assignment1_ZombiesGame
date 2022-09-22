@@ -46,7 +46,7 @@ class Enemy:
 
 
     def actAfterDive(self, player) -> None:
-        player.UpdateLive(1)
+        pass
 
 
     def hitHammer(self, player) -> None:
