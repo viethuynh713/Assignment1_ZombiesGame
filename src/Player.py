@@ -6,7 +6,6 @@ from pygame.locals import *
 
 class Player:
     def __init__(self):
-        self.score = 0
         self.live = 3
         self.hitCount = 0
         self.missCount = 0
@@ -22,7 +21,8 @@ class Player:
         self.missCount += 1
 
     def UpdateScore(self, score: int):
-        self.score += score
+        pass
+        #self.score += score
 
     def UpdateLive(self, decsLive: int):
         self.live -= decsLive
@@ -33,3 +33,10 @@ class Player:
 
     def getLives(self):
         return self.live
+    def ClearCount(self):
+        self.live = 3
+        self.hitCount = 0
+        self.missCount = 0
+        self.combo = 0
+        self.comboTime = 1
+        

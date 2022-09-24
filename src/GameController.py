@@ -20,12 +20,13 @@ class GameController:
         self.maxTimeSpawn = 1200
         self.player = player
         self.listEnemy = enemyManager
-        self.state = State.PLAYING
+        self.state = State.INIT
         self.listHoleHaveEnemy = []
         self.GenerateListHole()
         self.isOpenSetting = False
         self.isVolumeDisable = False
         self.isMusicDisable = False
+        self.offset = (0,0)
         self.Play()
 
 
@@ -50,7 +51,7 @@ class GameController:
 
 
     def HandleEventUI(self):
-        self.screen.blit(self.background, (0, 0))
+        #self.screen.blit(self.background, (0, 0))
         if self.state == State.INIT:
             # TODO: Draw panel game
             self.screen.blit(self.mainMenuTemplate, (285, -30))
@@ -89,8 +90,6 @@ class GameController:
             if button.Button(1200, 640, self.aboutUsButton, 0.5).draw(self.screen):
                 webbrowser.open("www.facebook.com")
                 # will change
-
-
         if self.state == State.TUTORIAL:
             if button.Button(30, 640, self.backButton, 0.5).draw(self.screen):
                 self.state = State.INIT
@@ -132,19 +131,26 @@ class GameController:
             self.screen.blit(self.endTemplate, (300, 98))
             if button.Button(467, 517, self.homeButton, 1).draw(self.screen):
                 self.state = State.INIT
+                self.InitGame()
             
             if button.Button(725, 517, self.restartButton, 1 ).draw(self.screen):
                 self.state = State.PLAYING
+                self.InitGame()
 
 
         if self.state == State.EXITPOPUP:
-            self.screen.blit(self.settingTemplate, (375, 156))
-            if button.Button(480, 340, self.yesButton, 1).draw(self.screen):
-                pygame.quit()
-                sys.exit()
-            
-            if button.Button(480, 425, self.noButton, 1).draw(self.screen):
+            self.screen.blit(self.exitPopupTemplate, (375+self.offset[0], 156 + self.offset[1]))
+            if button.Button(480 + self.offset[0], 340 + self.offset[1], self.yesButton, 1).draw(self.screen):
+                while True:
+                    x = random.randint(-500, 500)
+                    y = random.randint(-250, 250)
+                    if (math.pow(x - self.offset[0], 2) + math.pow(y - self.offset[1], 2)>200):
+                        self.offset = (x,y)
+                        break
+
+            if button.Button(480 + self.offset[0], 425 + self.offset[1], self.noButton, 1).draw(self.screen):
                 self.state = State.INIT
+                self.offset = (0,0)
 
     def SpawnEnemy(self):
 
@@ -195,6 +201,7 @@ class GameController:
         self.homeButton = pygame.image.load("../icon/icon_home.png")
         self.restartButton = pygame.image.load("../icon/icon_restart.png")
         self.aboutUsButton = pygame.image.load("../img/aboutUs_button.png")
+        self.exitPopupTemplate = pygame.image.load("../img/exit_popup_template.png")
 
         
         hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
@@ -205,20 +212,19 @@ class GameController:
         
         hammer = hammer_idle
         
-        #pygame.mouse.set_visible(False)
+        pygame.mouse.set_visible(False)
         background = pygame.image.load("../img/background.png")
         while True:
             self.screen.blit(background, (0, 0))
-            #Sself.screen.blit(hammer, (0, 0))
-            self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 50,pygame.mouse.get_pos()[1]-89))
-            self.clock.tick(FPS)
-            
             self.HandleEventUI()
+            #self.screen.blit(hammer, (0, 0))
+            self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 40,pygame.mouse.get_pos()[1]-89))
+            self.clock.tick(FPS)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == MOUSEBUTTONDOWN:# and self.state == State.PLAYING:
+                elif event.type == MOUSEBUTTONDOWN:
                     #print(pygame.mouse.get_pos())
                     hammer = hammer_click
                     if self.state == State.PLAYING:
@@ -243,16 +249,13 @@ class GameController:
                 self.EndGame()
             if self.state == State.PLAYING:
                 self.SpawnEnemy()
-            #self.HandleEventUI()
             pygame.display.update()
 
     def EndGame(self):
         self.state = State.END
-        print("End Game")
         print(self.player.hitCount)
         print(self.player.missCount)
     def InitGame(self):
-        self.player = Player()
-        
-        self.listEnemy = EnemyManager()
+        self.player.ClearCount()
+        self.listEnemy.ClearAllEnemy()
 
