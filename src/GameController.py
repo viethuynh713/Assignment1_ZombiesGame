@@ -1,5 +1,6 @@
 
 import random
+import webbrowser
 from EnemyManager import EnemyManager
 from Player import *
 import pygame
@@ -22,7 +23,11 @@ class GameController:
         self.state = State.PLAYING
         self.listHoleHaveEnemy = []
         self.GenerateListHole()
+        self.isOpenSetting = False
+        self.isVolumeDisable = False
+        self.isMusicDisable = False
         self.Play()
+
 
     def GenerateListHole(self):
         self.listHole = []
@@ -45,46 +50,101 @@ class GameController:
 
 
     def HandleEventUI(self):
+        self.screen.blit(self.background, (0, 0))
         if self.state == State.INIT:
             # TODO: Draw panel game
-            if self.play_button.draw(self.screen):
+            self.screen.blit(self.mainMenuTemplate, (285, -30))
+
+            if button.Button(530, 355, self.playButton, 1).draw(self.screen):
                 self.isOpenSetting = False
-                State = State.PLAYING
+                self.state = State.PLAYING
 
-            if self.exit_button.draw(self.screen):
-                pygame.quit()
+            if button.Button(530, 555, self.exitButtonMenu, 1).draw(self.screen):
+                self.state = State.EXITPOPUP
 
-            if self.tutorial_button.draw(self.screen):
-                State = State.TUTORIAL
-            if self.setting_button.draw(self.screen):
-                self.isOpenSetting = True
-            if self.isOpenSetting:
-                if self.musicMenu_button.draw(self.screen):
-                    # TODO: current state = ! current state && change icon
-                    pass
-                if self.soundMenu_button.draw(self.screen):
-                    # TODO: Same 
-                    pass
-        if self.state == State.TUTORIAL:
+            if button.Button(530, 455, self.tutorialButton, 1).draw(self.screen):
+                self.state = State.TUTORIAL
             
-            # TODO: implement tutorial mode
-            pass
+            if button.Button(1207, 21, self.settingIcon, 1).draw(self.screen):
+                if self.isOpenSetting:
+                    self.isOpenSetting = False
+                else:
+                    self.isOpenSetting = True
+            
+            if self.isOpenSetting:
+                if self.isVolumeDisable:
+                    if button.Button(1207, 98, self.volumeDisableIcon, 1).draw(self.screen):
+                        self.isVolumeDisable = False
+                else:
+                    if button.Button(1207, 98, self.volumeActiveIcon, 1).draw(self.screen):
+                        self.isVolumeDisable = True
+
+                if self.isMusicDisable:
+                    if button.Button(1207, 175, self.musicDisableIcon, 1).draw(self.screen):
+                        self.isMusicDisable = False
+                else:
+                    if button.Button(1207, 175, self.musicActiveIcon, 1).draw(self.screen):
+                        self.isMusicDisable = True
+                
+            if button.Button(1200, 640, self.aboutUsButton, 0.5).draw(self.screen):
+                webbrowser.open("www.facebook.com")
+                # will change
+
+
+        if self.state == State.TUTORIAL:
+            if button.Button(30, 640, self.backButton, 0.5).draw(self.screen):
+                self.state = State.INIT
+
         if self.state == State.PLAYING:
-            # TODO: draw list heart images
-            if self.setting_button.draw(self.screen):
+
+
+
+            # TODO: Need to implêmnt action phase
+            #       Need to return State.END when user lost the game    
+
+
+            if button.Button(1207, 21, self.settingIcon, 1).draw(self.screen):
                 self.state = State.PAUSE
                   
-        if self.state == State.PAUSED:
-            # TODO: draw template setting
-            if self.resume_button.draw(self.screen):
-                state = State.PLAYING
-            if self.exitSetting_button.draw(self.screen):
-                # TODO: clear hit count, miss count,list enemy
-                
-                state = State.INIT
+        if self.state == State.PAUSE:
+            self.screen.blit(self.settingTemplate, (375, 156))
+            if button.Button(464, 248, self.resumeButton, 1).draw(self.screen):
+                self.state = State.PLAYING
+            if button.Button(464, 333, self.exitButtonSetting, 1).draw(self.screen):
+                self.state = State.INIT
+            
+            if self.isVolumeDisable:
+                if button.Button(532, 429, self.volumeDisableIcon, 1).draw(self.screen):
+                    self.isVolumeDisable = False
+            else:
+                if button.Button(532, 429, self.volumeActiveIcon, 1).draw(self.screen):
+                    self.isVolumeDisable = True
+
+            if self.isMusicDisable:
+                if button.Button(683, 429, self.musicDisableIcon, 1).draw(self.screen):
+                        self.isMusicDisable = False
+            else:
+                if button.Button(683, 429, self.musicActiveIcon, 1).draw(self.screen):
+                        self.isMusicDisable = True
             
         if self.state == State.END:
-            pass
+            self.endTemplate = pygame.transform.scale(self.settingTemplate, (int(self.settingTemplate.get_width() * 1.3), int(self.settingTemplate.get_height() * 1.3)))
+            self.screen.blit(self.endTemplate, (300, 98))
+            if button.Button(467, 517, self.homeButton, 1).draw(self.screen):
+                self.state = State.INIT
+            
+            if button.Button(725, 517, self.restartButton, 1 ).draw(self.screen):
+                self.state = State.PLAYING
+
+
+        if self.state == State.EXITPOPUP:
+            self.screen.blit(self.settingTemplate, (375, 156))
+            if button.Button(480, 340, self.yesButton, 1).draw(self.screen):
+                pygame.quit()
+                sys.exit()
+            
+            if button.Button(480, 425, self.noButton, 1).draw(self.screen):
+                self.state = State.INIT
 
     def SpawnEnemy(self):
 
@@ -107,32 +167,34 @@ class GameController:
         # Set Resolution
         self.screen = pygame.display.set_mode((WIDTH_SCREEN, HEIGHT_SCREEN))
         # Set name of the game
-        pygame.display.set_caption("Hammer King")
+        pygame.display.set_caption("Hammer Kings")
         # Set icon for the game
         icon = pygame.image.load("../icon/icon_game.png")
         pygame.display.set_icon(icon)
         # Set icon for the game
+        self.background = pygame.image.load("../img/background.png")
+        #self.screen.blit(background, (0, 0))
 
         # # Set up UI
         # # Init Game Screen
-        # self.play_button = Button()
-        # self.exitMenu_button = Button()
-        # self.setting_button = Button()
-        # self.tutorial_button = Button()
-        # self.soundMenu_button = Button()
-        # self.musicMenu_button = Button()
-        # # Settings panel 
-        # self.soundSetting_button = Button()
-        # self.musicSetting_button = Button()
-        # self.resume_button = Button()
-        # self.exitSetting_button = Button()
-        
-        # # End game panel
-        # self.home_button = Button()
-        # self.restart_button = Button()
-        # TODO : Text of hit count and miss count of game.
-        # TODO : Init list heart image
-        self.isOpenSetting = False
+        self.mainMenuTemplate = pygame.image.load("../img/mainMenu_template.png")
+        self.playButton = pygame.image.load("../img/play_button.png")
+        self.exitButtonMenu = pygame.image.load("../img/exit_button_menu.png")
+        self.tutorialButton = pygame.image.load("../img/tutorial_button.png")
+        self.settingIcon = pygame.image.load("../icon/icon_setting.png")
+        self.volumeActiveIcon = pygame.image.load("../icon/icon_volume.png")
+        self.volumeDisableIcon = pygame.image.load("../icon/icon_muteVolume.png")
+        self.musicActiveIcon = pygame.image.load("../icon/icon_sound.png")
+        self.musicDisableIcon = pygame.image.load("../icon/icon_muteSound.png")
+        self.settingTemplate = pygame.image.load("../img/setting_template.png")
+        self.resumeButton = pygame.image.load("../img/resume_button.png")
+        self.exitButtonSetting = pygame.image.load("../img/exit_button_setting.png")
+        self.backButton = pygame.image.load("../img/back_button.png")
+        self.yesButton = pygame.image.load("../img/yes_button.png")
+        self.noButton = pygame.image.load("../img/no_button.png")
+        self.homeButton = pygame.image.load("../icon/icon_home.png")
+        self.restartButton = pygame.image.load("../icon/icon_restart.png")
+        self.aboutUsButton = pygame.image.load("../img/aboutUs_button.png")
 
         
         hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
@@ -150,6 +212,8 @@ class GameController:
             #Sself.screen.blit(hammer, (0, 0))
             self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 50,pygame.mouse.get_pos()[1]-89))
             self.clock.tick(FPS)
+            
+            self.HandleEventUI()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
