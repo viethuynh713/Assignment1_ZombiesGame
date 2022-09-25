@@ -13,6 +13,10 @@ from enumType import *
 from Bomb import *
 from Zombie import *
 
+red = (255,0 , 0)
+green = (0, 255, 0)
+
+
 class GameController:
     def __init__(self, player: Player, enemyManager: EnemyManager) -> None:
         self.timeSpawn = 100# DEFAULT_TIME_SPAWN
@@ -138,6 +142,12 @@ class GameController:
                 self.InitGame()
 
 
+            hitCount =  self.font.render('Hit:      ' + str(self.player.hitCount), True, green)
+            missCount = self.font.render('Miss:   ' + str(self.player.missCount), True, red)
+            
+            self.screen.blit(hitCount, (500, 260))
+            self.screen.blit(missCount, (500, 350))
+            
         if self.state == State.EXITPOPUP:
             self.screen.blit(self.exitPopupTemplate, (375+self.offset[0], 156 + self.offset[1]))
             if button.Button(480 + self.offset[0], 340 + self.offset[1], self.yesButton, 1).draw(self.screen):
@@ -202,6 +212,7 @@ class GameController:
         self.restartButton = pygame.image.load("../icon/icon_restart.png")
         self.aboutUsButton = pygame.image.load("../img/aboutUs_button.png")
         self.exitPopupTemplate = pygame.image.load("../img/exit_popup_template.png")
+        self.font = pygame.font.Font('freesansbold.ttf', 45)
 
         
         hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
@@ -253,8 +264,8 @@ class GameController:
 
     def EndGame(self):
         self.state = State.END
-        print(self.player.hitCount)
-        print(self.player.missCount)
+        
+
     def InitGame(self):
         self.player.ClearCount()
         self.listEnemy.ClearAllEnemy()
