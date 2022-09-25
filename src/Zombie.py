@@ -1,6 +1,7 @@
 import math
 import pygame, sys
 from pygame.locals import *
+from pygame import mixer
 from constant import *
 import enumType
 import Enemy
@@ -12,7 +13,14 @@ class Zombie(Enemy.Enemy):
 
     
     def hitHammer(self, player) -> None:
+        print("Zombie")
         if self.canGetHit:
+            # Play sound
+            hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
+            hit_enemy_sound = mixer.Sound('../Sound/stun.mp3')
+            hit_hammer_sound.play()
+            hit_enemy_sound.play()
+            # Add score
             player.UpdateScore(10)
             self.destroy()
 

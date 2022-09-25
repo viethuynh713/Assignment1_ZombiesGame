@@ -1,5 +1,6 @@
 import pygame 
 from pygame.locals import *
+from pygame import mixer
 import Zombie
 import Bomb
 
@@ -9,12 +10,12 @@ class EnemyManager:
 
 
     def initZombie(self, position: tuple) -> None:
-        zombie = Zombie.Zombie(self, position,1)
+        zombie = Zombie.Zombie(self, position,5)
         self.enemyList.append(zombie)
 
 
     def initBomb(self, position: tuple) -> None:
-        bomb = Bomb.Bomb(self, position,1)
+        bomb = Bomb.Bomb(self, position,5)
         self.enemyList.append(bomb)
 
 
@@ -28,12 +29,17 @@ class EnemyManager:
         for enemy in self.enemyList:
             if enemy.isCollideHammer(position):
                 return enemy
+        miss_enemy_sound = mixer.Sound('../Sound/miss_enemy.mp3')
+        miss_enemy_sound.play()
         return None
 
 
     def removeEnemy(self, enemy) -> None:
         self.enemyList.remove(enemy)
+    
 
 
     def getEnemyList(self) -> list:
         return self.enemyList
+    def ClearAllEnemy(self) -> None:
+        self.enemyList = []
