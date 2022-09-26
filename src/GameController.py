@@ -13,7 +13,7 @@ from enumType import *
 from Bomb import *
 from Zombie import *
 
-red = (255,0 , 0)
+red = (255, 0 , 0)
 green = (0, 255, 0)
 
 
@@ -217,19 +217,19 @@ class GameController:
         
         hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
         
-        hammer_idle = pygame.transform.scale(hammer_img,(120 ,120)) 
+        hammer_idle = pygame.transform.scale(hammer_img, (120 ,120)) 
         
         hammer_click = pygame.transform.rotate(hammer_idle,30)
         
         hammer = hammer_idle
         
-        pygame.mouse.set_visible(False)
+        #pygame.mouse.set_visible(False)
         background = pygame.image.load("../img/background.png")
         while True:
             self.screen.blit(background, (0, 0))
             self.HandleEventUI()
             #self.screen.blit(hammer, (0, 0))
-            self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 40,pygame.mouse.get_pos()[1]-89))
+            self.screen.blit(hammer,(pygame.mouse.get_pos()[0] - 32, pygame.mouse.get_pos()[1] - 67))
             self.clock.tick(FPS)
             for event in pygame.event.get():
                 if event.type == QUIT:
