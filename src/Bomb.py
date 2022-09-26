@@ -18,9 +18,9 @@ class Bomb(Enemy.Enemy):
         if self.canGetHit:
             # Play sound
             hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
-            # hit_bomb_sound = mixer.Sound('../Sound/HLsound.m4a')
+            hit_bomb_sound = mixer.Sound('../Sound/HLsound.mp3')
             hit_hammer_sound.play()
-            # hit_bomb_sound.play()
+            hit_bomb_sound.play()
             # Add score
             player.UpdateLive(player.getLives())
             self.changeToDiedState()
