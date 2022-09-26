@@ -17,13 +17,9 @@ class Enemy:
         self.hitBox = Rect(position[0] - widthHitBox / 2, position[1] - heightHitBox, widthHitBox, heightHitBox)
         self.changeStateTime = ENEMY_CHANGE_STATE_TIME * (ENEMY_REDUCTION_APPEAR_RATE ** (math.floor(frame / ENEMY_REDUCTION_TIME)))
         self.standingTime = ENEMY_STANDING_TIME * (ENEMY_REDUCTION_APPEAR_RATE ** (math.floor(frame / ENEMY_REDUCTION_TIME)))
+        self.dieTime = ENEMY_DIED_TIME
         self.canGetHit = True
         self.actionTime = 0
-        # image
-        self.spriteLst = []
-        for i in range(0, ZOMBIE_SPRITE_LENGTH):
-            self.spriteLst.append("../img/Zombie/up" + str(i + 1) + ".png")
-        self.sprite = self.spriteLst[0]
         self.state = EnemyState.GROWING
 
 
@@ -38,10 +34,13 @@ class Enemy:
             if self.actionTime == self.standingTime:
                 self.state = EnemyState.DIVING
                 self.actionTime = 0
-        else:
+        elif self.state == EnemyState.DIVING:
             self.hitBox = Rect(self.hitBox.left, self.hitBox.top + self.maxHeightHitBox / self.changeStateTime, self.hitBox.width, self.hitBox.height - self.maxHeightHitBox / self.changeStateTime)
             if self.actionTime == self.changeStateTime:
                 self.actAfterDive(player)
+                self.destroy()
+        else:
+            if self.actionTime == self.dieTime:
                 self.destroy()
 
 
@@ -57,6 +56,12 @@ class Enemy:
         if self.hitBox.collidepoint(position[0], position[1]):
             return True
         return False
+
+
+    def changeToDiedState(self) -> None:
+        self.canGetHit = False
+        self.state = EnemyState.DIED
+        self.actionTime = 0
 
 
     def getHitBox(self) -> Rect:
