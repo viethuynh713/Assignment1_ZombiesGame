@@ -1,5 +1,6 @@
 
 import random
+from turtle import position
 import webbrowser
 from EnemyManager import EnemyManager
 from Player import *
@@ -52,6 +53,21 @@ class GameController:
         self.listHole.append((979, 631))
         self.listHole.append((850, 540))
         self.listHole.append((684, 671))
+        self.listHole.append((1231, 546))
+        self.listHole.append((552, 345))
+        self.listHole.append((407, 374))
+        self.listHole.append((231, 389))
+        self.listHole.append((94, 391))
+        self.listHole.append((35, 615))
+        self.listHole.append((213, 632))
+        self.listHole.append((320, 626))
+        self.listHole.append((1011, 642))
+        self.listHole.append((657, 423))
+        self.listHole.append((630, 317))
+        self.listHole.append((783, 585))
+        self.listHole.append((858, 229))
+        self.listHole.append((1134, 408))
+        self.listHole.append((929, 238))
 
 
     def HandleEventUI(self):
@@ -117,8 +133,8 @@ class GameController:
                 self.screen.blit(self.icon_heart, (60,14))
             elif self.player.getLives() == 1:
                 self.screen.blit(self.icon_heart, (6,14))
-                
-                
+            hitCount = pygame.font.Font("../font/BalsamiqSans-Bold.ttf", 25).render('Hit:      ' + str(self.player.hitCount), True, (255,199,0))
+            self.screen.blit(hitCount, (10,80))
                   
         if self.state == State.PAUSE:
             self.screen.blit(self.settingTemplate, (375, 156))
@@ -126,6 +142,7 @@ class GameController:
                 self.state = State.PLAYING
             if button.Button(464, 333, self.exitButtonSetting, 1).draw(self.screen):
                 self.state = State.INIT
+                self.InitGame()
             
             if self.isVolumeDisable:
                 if button.Button(532, 429, self.volumeDisableIcon, 1).draw(self.screen):
@@ -176,10 +193,17 @@ class GameController:
     def SpawnEnemy(self):
 
         if self.timeSpawn <= 0:
-            if random.randint(0,100) < 50:
-                self.listEnemy.initBomb(self.listHole[random.randint(0,self.listHole.__len__()-1)])
+            if self.listHole.__len__() < 7:
+                self.listHole.append(self.listHoleHaveEnemy.pop(0))
+                
+            position = self.listHole.pop(random.randint(0,self.listHole.__len__()-1))
+            
+            self.listHoleHaveEnemy.append(position)
+            if random.randint(0,100) < 10:
+                self.listEnemy.initBomb(position)
             else:
-                self.listEnemy.initZombie(self.listHole[random.randint(0,self.listHole.__len__()-1)])
+                self.listEnemy.initZombie(position)
+            self.listHoleHaveEnemy.append(position)
             self.timeSpawn = random.randint(self.minTimeSpawn, self.maxTimeSpawn)
             
         self.timeSpawn -= self.clock.tick(FPS)
@@ -247,7 +271,7 @@ class GameController:
                     pygame.quit()
                     sys.exit()
                 elif event.type == MOUSEBUTTONDOWN:
-                    #print(pygame.mouse.get_pos())
+                    print(pygame.mouse.get_pos())
                     hammer = hammer_click
                     if self.state == State.PLAYING:
                         enemy = self.listEnemy.hitHammer(pygame.mouse.get_pos())
