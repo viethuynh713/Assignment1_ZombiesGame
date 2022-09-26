@@ -20,13 +20,14 @@ class Zombie(Enemy.Enemy):
         self.sprite = self.upSpriteLst[0]
 
     
-    def hitHammer(self, player) -> None:
+    def hitHammer(self, player, gameController) -> None:
         if self.canGetHit:
             # Play sound
-            hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
-            hit_enemy_sound = mixer.Sound('../Sound/stun.mp3')
-            hit_hammer_sound.play()
-            hit_enemy_sound.play()
+            if not gameController.getVolumeDisable():
+                hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
+                hit_enemy_sound = mixer.Sound('../Sound/stun.mp3')
+                hit_hammer_sound.play()
+                hit_enemy_sound.play()
             # Add score
             player.UpdateScore(10)
             self.changeToDiedState()

@@ -244,11 +244,11 @@ class GameController:
                             # TODO: Check type of enemy, if type of enemy is Boom -> subtract heart else increase hit score
                             if type(enemy) == Bomb:
                                 self.player.UpdateMissCount()
-                                enemy.hitHammer(self.player)
+                                enemy.hitHammer(self.player, self)
                                     
                             if type(enemy) == Zombie:
                                 self.player.UpdateHitCount()
-                                enemy.hitHammer(self.player)
+                                enemy.hitHammer(self.player, self)
                                 
                         else:
                             # TODO: Increase the player miss score
@@ -270,3 +270,6 @@ class GameController:
         self.player.ClearCount()
         self.listEnemy.ClearAllEnemy()
 
+
+    def getVolumeDisable(self):
+        return self.isVolumeDisable
