@@ -104,6 +104,17 @@ class GameController:
 
             if button.Button(1207, 21, self.settingIcon, 1).draw(self.screen):
                 self.state = State.PAUSE
+            if self.player.getLives() == 3:
+                self.screen.blit(self.icon_heart, (6,14))
+                self.screen.blit(self.icon_heart, (60,14))
+                self.screen.blit(self.icon_heart, (114,14))
+            elif self.player.getLives() == 2:
+                self.screen.blit(self.icon_heart, (6,14))
+                self.screen.blit(self.icon_heart, (60,14))
+            elif self.player.getLives() == 1:
+                self.screen.blit(self.icon_heart, (6,14))
+                
+                
                   
         if self.state == State.PAUSE:
             self.screen.blit(self.settingTemplate, (375, 156))
@@ -202,7 +213,8 @@ class GameController:
         self.restartButton = pygame.image.load("../icon/icon_restart.png")
         self.aboutUsButton = pygame.image.load("../img/aboutUs_button.png")
         self.exitPopupTemplate = pygame.image.load("../img/exit_popup_template.png")
-
+        self.font = pygame.font.Font("../font/BalsamiqSans-Bold.ttf", 45)
+        self.icon_heart = pygame.image.load("../icon/icon_heart.png")
         
         hammer_img = pygame.image.load("../img/hammer.png").convert_alpha()
         
