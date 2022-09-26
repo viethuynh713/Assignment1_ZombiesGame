@@ -11,6 +11,7 @@ from main import *
 from enum import Enum
 from constant import *
 from enumType import *
+from generalMethod import *
 from Bomb import *
 from Zombie import *
 
@@ -79,6 +80,7 @@ class GameController:
             if button.Button(530, 355, self.playButton, 1).draw(self.screen):
                 self.isOpenSetting = False
                 self.state = State.PLAYING
+                playMusic(self.isMusicDisable, ingame_music_mp3)
 
             if button.Button(530, 555, self.exitButtonMenu, 1).draw(self.screen):
                 self.state = State.EXITPOPUP
@@ -100,12 +102,9 @@ class GameController:
                     if button.Button(1207, 98, self.volumeActiveIcon, 1).draw(self.screen):
                         self.isVolumeDisable = True
 
-                if self.isMusicDisable:
-                    if button.Button(1207, 175, self.musicDisableIcon, 1).draw(self.screen):
-                        self.isMusicDisable = False
-                else:
-                    if button.Button(1207, 175, self.musicActiveIcon, 1).draw(self.screen):
-                        self.isMusicDisable = True
+                if (self.isMusicDisable and button.Button(1207, 175, self.musicDisableIcon, 1).draw(self.screen)) \
+                    or (not self.isMusicDisable and button.Button(1207, 175, self.musicActiveIcon, 1).draw(self.screen)):
+                        self.isMusicDisable = switchMusic(self.isMusicDisable)
                 
             if button.Button(1200, 640, self.aboutUsButton, 0.5).draw(self.screen):
                 webbrowser.open("www.facebook.com")
@@ -143,6 +142,7 @@ class GameController:
             if button.Button(464, 333, self.exitButtonSetting, 1).draw(self.screen):
                 self.state = State.INIT
                 self.InitGame()
+                playMusic(self.isMusicDisable, lobby_music_mp3)
             
             if self.isVolumeDisable:
                 if button.Button(532, 429, self.volumeDisableIcon, 1).draw(self.screen):
@@ -151,12 +151,9 @@ class GameController:
                 if button.Button(532, 429, self.volumeActiveIcon, 1).draw(self.screen):
                     self.isVolumeDisable = True
 
-            if self.isMusicDisable:
-                if button.Button(683, 429, self.musicDisableIcon, 1).draw(self.screen):
-                        self.isMusicDisable = False
-            else:
-                if button.Button(683, 429, self.musicActiveIcon, 1).draw(self.screen):
-                        self.isMusicDisable = True
+            if (self.isMusicDisable and button.Button(683, 429, self.musicDisableIcon, 1).draw(self.screen)) \
+                or (not self.isMusicDisable and button.Button(683, 429, self.musicActiveIcon, 1).draw(self.screen)):
+                    self.isMusicDisable = switchMusic(self.isMusicDisable)
             
         if self.state == State.END:
             self.endTemplate = pygame.transform.scale(self.settingTemplate, (int(self.settingTemplate.get_width() * 1.3), int(self.settingTemplate.get_height() * 1.3)))
@@ -164,6 +161,7 @@ class GameController:
             if button.Button(467, 517, self.homeButton, 1).draw(self.screen):
                 self.state = State.INIT
                 self.InitGame()
+                playMusic(self.isMusicDisable, lobby_music_mp3)
             
             if button.Button(725, 517, self.restartButton, 1 ).draw(self.screen):
                 self.state = State.PLAYING
@@ -189,6 +187,7 @@ class GameController:
             if button.Button(480 + self.offset[0], 425 + self.offset[1], self.noButton, 1).draw(self.screen):
                 self.state = State.INIT
                 self.offset = (0,0)
+                playMusic(self.isMusicDisable, lobby_music_mp3)
 
     def SpawnEnemy(self):
 
@@ -260,6 +259,10 @@ class GameController:
         
         #pygame.mouse.set_visible(False)
         background = pygame.image.load("../img/background.png")
+
+        # music
+        playMusic(self.isMusicDisable, lobby_music_mp3)
+
         while True:
             self.screen.blit(background, (0, 0))
             self.HandleEventUI()
@@ -306,5 +309,8 @@ class GameController:
         self.listEnemy.ClearAllEnemy()
 
 
-    def getVolumeDisable(self):
+    def getVolumeDisable(self) -> None:
         return self.isVolumeDisable
+
+    def getMusicDisable(self) -> None:
+        return self.isMusicDisable

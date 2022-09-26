@@ -1,10 +1,16 @@
+### Source
+ingame_music_mp3 = '../Sound/ingame_music.mp3'
+lobby_music_mp3 = '../Sound/lobby_music.mp3'
+
 ### General
 WIDTH_SCREEN = 1280
 HEIGHT_SCREEN = 720
 FPS = 30
 VERSION = 1.0
+
 ### Game Controller
 DEFAULT_TIME_SPAWN = 5000
+
 ### Zombie
 ENEMY_WIDTH_HITBOX = 200
 ENEMY_HEIGHT_HITBOX = 276
