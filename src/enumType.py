@@ -12,3 +12,4 @@ class State(Enum):
     PAUSE = 2,
     END = 3,
     TUTORIAL = 4,
+    EXITPOPUP = 5;

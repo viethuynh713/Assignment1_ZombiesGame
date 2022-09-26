@@ -15,5 +15,9 @@ if __name__ == '__main__':
     
     enemyManager = EnemyManager.EnemyManager()
     
+    #enemyManager.initBomb((400, 400))
+    #enemyManager.initZombie((600, 500))
+    #enemyManager.initBomb((800, 700))
+    
     gameController = GameController.GameController(player, enemyManager) 
     

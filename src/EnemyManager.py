@@ -36,7 +36,10 @@ class EnemyManager:
 
     def removeEnemy(self, enemy) -> None:
         self.enemyList.remove(enemy)
+    
 
 
     def getEnemyList(self) -> list:
         return self.enemyList
+    def ClearAllEnemy(self) -> None:
+        self.enemyList = []
