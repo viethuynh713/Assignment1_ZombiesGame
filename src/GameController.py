@@ -109,9 +109,9 @@ class GameController:
             if button.Button(1207, 21, self.settingIcon, 1).draw(self.screen):
                 self.state = State.PAUSE
             if self.player.getLives() == 3:
-                self.screen.blit(self.icon_heart, (6,14))
-                self.screen.blit(self.icon_heart, (60,14))
-                self.screen.blit(self.icon_heart, (114,14))
+                self.screen.blit(self.icon_heart, (10,14))
+                self.screen.blit(self.icon_heart, (65,14))
+                self.screen.blit(self.icon_heart, (120,14))
             elif self.player.getLives() == 2:
                 self.screen.blit(self.icon_heart, (6,14))
                 self.screen.blit(self.icon_heart, (60,14))
