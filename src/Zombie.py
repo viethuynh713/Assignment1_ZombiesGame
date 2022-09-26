@@ -20,7 +20,7 @@ class Zombie(Enemy.Enemy):
         self.sprite = self.upSpriteLst[0]
 
     
-    def hitHammer(self, player, gameController) -> None:
+    def hitHammer(self, gameController, player) -> None:
         if self.canGetHit:
             # Play sound
             if not gameController.getVolumeDisable():
