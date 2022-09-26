@@ -14,13 +14,14 @@ class Bomb(Enemy.Enemy):
         self.sprite = self.rootSprite
     
 
-    def hitHammer(self, player) -> None:
+    def hitHammer(self, gameController, player) -> None:
         if self.canGetHit:
             # Play sound
-            hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
-            hit_bomb_sound = mixer.Sound('../Sound/HLsound.mp3')
-            hit_hammer_sound.play()
-            hit_bomb_sound.play()
+            if not gameController.getVolumeDisable():
+                hit_hammer_sound = mixer.Sound('../Sound/hit_enemy.mp3')
+                hit_bomb_sound = mixer.Sound('../Sound/HLsound.mp3')
+                hit_hammer_sound.play()
+                hit_bomb_sound.play()
             # Add score
             player.UpdateLive(player.getLives())
             self.changeToDiedState()

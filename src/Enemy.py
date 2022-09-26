@@ -48,7 +48,7 @@ class Enemy:
         pass
 
 
-    def hitHammer(self, player) -> None:
+    def hitHammer(self, gameController, player) -> None:
         print("Enemy")
 
 
