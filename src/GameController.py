@@ -107,7 +107,7 @@ class GameController:
                         self.isMusicDisable = switchMusic(self.isMusicDisable)
                 
             if button.Button(1200, 640, self.aboutUsButton, 0.5).draw(self.screen):
-                webbrowser.open("www.facebook.com")
+                webbrowser.open("https://drive.google.com/file/d/1njq8S15yb5eUZwvlXC8dDCMySusKQqPH/view?usp=sharing")
                 # will change
         if self.state == State.TUTORIAL:
             if button.Button(30, 640, self.backButton, 0.5).draw(self.screen):
