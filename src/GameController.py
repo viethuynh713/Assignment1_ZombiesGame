@@ -198,7 +198,7 @@ class GameController:
             position = self.listHole.pop(random.randint(0,self.listHole.__len__()-1))
             
             self.listHoleHaveEnemy.append(position)
-            if random.randint(0,100) < 10:
+            if random.randint(0,100) < 35:
                 self.listEnemy.initBomb(position)
             else:
                 self.listEnemy.initZombie(position)
